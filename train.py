@@ -16,7 +16,7 @@ train_datagen = keras.preprocessing.image.ImageDataGenerator(
 val_datagen = keras.preprocessing.image.ImageDataGenerator(rescale=1.0 / 255.0)
 
 num_gpus = 2
-batch_size = 100 * num_gpus
+batch_size = 64 * num_gpus
 dataset_root = os.path.expanduser("~/datasets/imagenet")
 train_generator = train_datagen.flow_from_directory(
     os.path.join(dataset_root, "train"),
@@ -49,13 +49,14 @@ print("Training started at", datetime.datetime.utcnow().isoformat())
 
 # Train it
 num_epochs = 50
+num_workers = 8
 multigpu_model.fit_generator(
     train_generator,
     steps_per_epoch=200000 // batch_size,
     epochs=num_epochs,
     validation_data=val_generator,
     validation_steps=8000 // batch_size,
-    max_queue_size=batch_size * 3 // 2,  # 1.5x the batch size
+    max_queue_size=batch_size * num_workers * num_gpus,
     workers=8,
     callbacks=[checkpoint_callback])
 # Evaluate it
