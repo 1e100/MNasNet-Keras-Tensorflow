@@ -15,10 +15,13 @@ Mobile](https://arxiv.org/pdf/1807.11626.pdf)
 ## Train it
 Train the [MNasNet
 model](https://github.com/Shathe/MNasNet-Keras-Tensorflow/blob/master/Mnasnet.py)
-on the MNIST dataset! just execute:
+on the ImageNet dataset! just execute:
 ```
 ./train.py
 ```
+This assumes that ImageNet is under `~/datasets/imagenet`, see code for expected
+paths and subdirectory names.
+
 For checking and inspecting the Mnasnet model described in the paper, execute:
 ```
 python3 Mnasnet.py
